@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!-- 画布 -->
+    <canvas id="love" width="800" height="800">
+    </canvas>
+
+</body>
+
+<script type="text/javascript">
+    /*
+    1.1 升级
+    根据canvas自动计算其他参数，只需要调整大小即可
+
+    1. 坐标原点是在左上角，想在中心显示，每次画时x,y都加上200，先加200平移到中心
+
+    2. 画布大小为400*400,公式里x是有取值范围的，具体不知道，但在-2到2之间，这里把他放大100倍来画
+    
+    4. 和直角坐标系不同，左方和下方是x和y是正的，y那里需要加-号，不然会反
+
+
+    */
+    function drawLove() {
+        var canvas = document.getElementById("love")
+
+        console.log(canvas.width);
+        // 画布大小
+        var width = canvas.width;
+        var height = canvas.height;
+        //自动计算
+
+        var ctx = canvas.getContext("2d");
+
+
+        console.log("初始化love...");
+        console.log(ctx);
+
+        // 设置背景色
+        ctx.fillStyle = "rgb(200,200,200)";
+        ctx.fillRect(0, 0, width, height);
+
+        //画布和公式的图的比例
+        var rate_size = width/4;
+        // 画布的中心点
+        var center_x=width/2;
+        var center_y=height/2;
+
+        // 中线
+
+        // 垂直的
+        // ctx.moveTo(200, 0);
+        // for (var i = 0; i <= 400; i += 50) {
+        //     ctx.lineTo(200, i);
+        //     ctx.lineTo(220, i);
+        //     ctx.moveTo(200, i);
+        // }
+
+        // ctx.moveTo(0, 200);
+        // for (var i = 0; i <= 400; i += 50) {
+        //     ctx.lineTo(i, 200);
+        //     ctx.lineTo(i, 180);
+        //     ctx.moveTo(i, 200);
+        // }
+        // ctx.stroke();
+
+
+        // start 画爱心
+        ctx.beginPath();
+
+        // 记录第一个点的位置，用来，在画完最后一个点时围起来
+        var startx = -1;
+        var starty = -1;
+
+        // 画上部分
+        for (var x = -1.2; x <= 1.2; x += 0.01) {
+
+            // x的绝对值
+            var x2 = Math.abs(x);
+            //求出y
+            var y = (Math.pow(x2, 2 / 3) + Math.sqrt(Math.pow(x2, 4 / 3) - 4 * Math.pow(x2, 2) + 4)) / 2
+
+            var final_x = (x * rate_size) + center_x;
+            var final_y = -(y * rate_size) +center_y;
+
+            
+            // 如果startx没有，并且y是有效的时
+            if (startx == -1 && !isNaN(final_y)) {
+                startx = final_x;
+                starty = final_y;
+                ctx.moveTo(final_x, final_y);
+            }
+            else
+                ctx.lineTo(final_x, final_y);
+
+        }
+
+
+        // 画下部分,从正画到负，为了围起来
+        for (var x = 1.2; x >= -1.2; x -= 0.01) {
+
+            // x的绝对值
+            var x2 = Math.abs(x);
+            //求出y
+            var y = (Math.pow(x2, 2 / 3) - Math.sqrt(Math.pow(x2, 4 / 3) - 4 * Math.pow(x2, 2) + 4)) / 2
+
+
+
+            var final_x = (x * rate_size) + center_x;
+            var final_y = -(y * rate_size) +center_y;
+
+            ctx.lineTo(final_x, final_y);
+
+        }
+        console.log(startx, starty);
+        // 围起来
+        ctx.lineTo(startx, starty);
+
+        // 用线画出路径
+        ctx.fillStyle="rgb(180,0,180)";
+        ctx.fill();
+
+
+    }
+
+    drawLove();
+
+
+
+
+</script>
+
+</html>
