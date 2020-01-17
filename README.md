@@ -10,7 +10,7 @@ http://www.360doc.cn/mip/680393802.html
 https://wk.baidu.com/view/6296ddd1b14e852458fb574f
 
 在线预览:
-
+http://bbs.formatfa.top/loveshape/
 
 
 来自动漫 [ 理科生坠入情网，故尝试证明。](https://www.bilibili.com/bangumi/media/md28223860/?from=search&amp;seid=5157940974020117719 )最后一集出现的公式
@@ -23,16 +23,18 @@ https://wk.baidu.com/view/6296ddd1b14e852458fb574f
 $$
 (x^2 + y^2-1)^3=x^2y^3
 $$
+
+
 知x时y的解(网上的图片)
 
-解的公式
 
+解的公式
 ![](README/formula.png)
 
 
 
 
-在直角坐标系中绘制时,x取值范围在 [-1.x,1.x]之间,上面解的公式中+时，绘制的是上面的部分，为-时绘制下面的部分
+在直角坐标系中绘制时,x取值范围应该在 [-1.x,1.x]之间,上面解的公式中+时，绘制的是上面的部分，为-时绘制下面的部分
 
 ![](README/直角坐标系中.png)
 
