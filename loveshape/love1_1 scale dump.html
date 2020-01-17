@@ -12,38 +12,49 @@
 
     
     <!-- 画布 -->
-    <canvas id="love" width="400" height="400">
-    </canvas>
+        <canvas id="love" width="400" height="400"></canvas>
+        <div style="float: right;">糟糕，是心动的感觉</div>
+
 
 </body>
 
 <script type="text/javascript">
     /*
-    
+    自动放大缩小------------------------------------------------------------------------------------------------------------------------------------             
+    设置定时器,                           
+    根据canvas自动计算其他参数，只需要调整大小即可
+
     1. 坐标原点是在左上角，想在中心显示，每次画时x,y都加上200，先加200平移到中心
 
     2. 画布大小为400*400,公式里x是有取值范围的，具体不知道，但在-2到2之间，这里把他放大100倍来画
     
     4. 和直角坐标系不同，左方和下方是x和y是正的，y那里需要加-号，不然会反
-    */
-    function drawLove() {
-        var canvas = document.getElementById("love")
 
-        console.log(canvas.width);
+
+    */
+
+    //画布和公式的图的比例
+    var rate_size = 94  ;
+    var canvas = document.getElementById("love")
+    
+    function drawLove() {
+
+
         // 画布大小
         var width = canvas.width;
         var height = canvas.height;
-
+        //自动计算
 
         var ctx = canvas.getContext("2d");
 
-
-        console.log("初始化love...");
-        console.log(ctx);
-
         // 设置背景色
-        ctx.fillStyle = "rgb(200,200,200)";
-        ctx.fillRect(0, 0, 400, 400);
+        ctx.fillStyle = "rgb(128,128,128)";
+        ctx.fillRect(0, 0, width, height);
+
+        
+        // 画布的中心点
+        var center_x=width/2;
+        var center_y=height/2;
 
         // 中线
 
@@ -79,8 +90,8 @@
             //求出y
             var y = (Math.pow(x2, 2 / 3) + Math.sqrt(Math.pow(x2, 4 / 3) - 4 * Math.pow(x2, 2) + 4)) / 2
 
-            var final_x = (x * 100) + 200;
-            var final_y = -(y * 100) + 200;
+            var final_x = (x * rate_size) + center_x;
+            var final_y = -(y * rate_size) +center_y;
 
             
             // 如果startx没有，并且y是有效的时
@@ -105,24 +116,34 @@
 
 
 
-            var final_x = (x * 100) + 200;
-            var final_y = -(y * 100) + 200;
+            var final_x = (x * rate_size) + center_x;
+            var final_y = -(y * rate_size) +center_y;
 
             ctx.lineTo(final_x, final_y);
 
         }
-        console.log(startx, starty);
+        
         // 围起来
         ctx.lineTo(startx, starty);
 
         // 用线画出路径
-        ctx.fillStyle="rgb(180,0,180)";
+        ctx.fillStyle="rgb(128,0,128)";
         ctx.fill();
-
+        
+        // 最大
+        if(rate_size>=width/4)
+        {
+            // clearInterval(handle);
+            rate_size=85;
+        }
+        else
+        // 每画一次倍数+1
+        rate_size+=15;
 
     }
-
-    drawLove();
+ 
+//  使用定时器
+    var  handle = setInterval( "drawLove()",500);
 
 
 
